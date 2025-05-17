@@ -1,0 +1,59 @@
+
+-- one db -> 3 tables, -> 4 coloumns, 10 rows
+
+create database vitap;
+
+use vitap;
+
+create table vitap_cse(
+csstudent_name varchar(20),
+csstudent_id int,
+csstudent_marks int,
+csstudent_cgpa float
+);
+
+create table vitap_mech(
+mstudent_name varchar(20),
+mstudent_id int,
+mstudent_marks int,
+mstudent_cgpa float
+);
+
+create table vitap_civil(
+cstudent_name varchar(20),
+cstudent_id int,
+cstudent_marks int,
+cstudent_cgpa float
+);
+insert into vitap_cse values("Rishi Karthikeya",8393,89,8.53),("Arun Kumar",9334,91,9.12),("Arun Yadav",23434,94,9.44),("Poojitha",47242,87,9.1),("rishitha",39328,93,9.23),("Rahul",53342,78,8.45),("Eswar",54542,87,8.67),("Haripriya",93742,97,9.42),("Akhilesh",35323,83,8.78),("Adithya",6452,78,8.42);
+
+select * from vitap_cse;
+
+insert into vitap_mech values("Rishi Karthikeya",8393,89,8.53),("Arun Kumar",9334,91,9.12),("Arun Yadav",23434,94,9.44),("Poojitha",47242,87,9.1),("rishitha",39328,93,9.23),("Rahul",53342,78,8.45),("Eswar",54542,87,8.67),("Haripriya",93742,97,9.42),("Akhilesh",35323,83,8.78),("Adithya",6452,78,8.42);
+
+insert into vitap_civil values("Rishi Karthikeya",8393,89,8.53),("Arun Kumar",9334,91,9.12),("Arun Yadav",23434,94,9.44),("Poojitha",47242,87,9.1),("rishitha",39328,93,9.23),("Rahul",53342,78,8.45),("Eswar",54542,87,8.67),("Haripriya",93742,97,9.42),("Akhilesh",35323,83,8.78),("Adithya",6452,78,8.42);
+
+select * from vitap_mech;
+select * from vitap_civil;
+
+
+alter table vitap_cse add(
+cstudent_city varchar(20)
+);
+
+select * from vitap_cse;
+
+alter table vitap_cse drop cstudent_city;
+
+alter table vitap_cse add cstudent_city varchar(20) default "Andhra Pradesh";
+
+update vitap_cse set csstudent_marks = 95 where csstudent_id = 8393;
+
+update vitap_cse set csstudent_marks = csstudent_marks+1;
+
+
+
+
+
+
+
