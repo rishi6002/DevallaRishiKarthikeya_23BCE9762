@@ -1,0 +1,90 @@
+-- Delete , Drop and Truncate
+
+CREATE TABLE Worker (
+	WORKER_ID INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+	FIRST_NAME CHAR(25),
+	LAST_NAME CHAR(25),
+	SALARY INT(15),
+	JOINING_DATE DATETIME,
+	DEPARTMENT CHAR(25)
+);
+
+INSERT INTO Worker 
+	(WORKER_ID, FIRST_NAME, LAST_NAME, SALARY, JOINING_DATE, DEPARTMENT) VALUES
+		(001, 'Monika', 'Arora', 100000, '14-02-20 09.00.00', 'HR'),
+		(002, 'Niharika', 'Verma', 80000, '14-06-11 09.00.00', 'Admin'),
+		(003, 'Vishal', 'Singhal', 300000, '14-02-20 09.00.00', 'HR'),
+		(004, 'Amitabh', 'Singh', 500000, '14-02-20 09.00.00', 'Admin'),
+		(005, 'Vivek', 'Bhati', 500000, '14-06-11 09.00.00', 'Admin'),
+		(006, 'Vipul', 'Diwan', 200000, '14-06-11 09.00.00', 'Account'),
+		(007, 'Satish', 'Kumar', 75000, '14-01-20 09.00.00', 'Account'),
+		(008, 'Geetika', 'Chauhan', 90000, '14-04-11 09.00.00', 'Admin');
+
+
+-- Drop : DDL 
+-- It is a permanent action (You cannot undo)
+show databases;
+drop database vit;
+
+use vitap;
+desc vitap_cse;
+
+-- Alter table vitap_cse drop column cstudent_name; 
+
+
+-- Delete (Using this you can delete a tuple(record)) (You can delete the table but will not be removed from DB)
+
+#select * from vitap_cse;
+#select * from vitap_civil;
+
+select * from worker;
+delete from worker where worker_id = 2;
+select * from worker;
+
+delete from worker;
+select * from worker;
+
+-- delete from vitap_cse; (To delete table)
+-- delete from vitap_cse where (Condition); (To delete records which satisfies the condition)
+
+
+-- Truncate 
+
+truncate table worker;
+select * from worker;
+desc worker;
+
+
+-- Transactions
+
+start transaction;
+insert into worker value(009,"Rishi","Kumar",200000,'14-04-11 09.00.00',"Admin");
+savepoint a11;
+insert into worker value(010,"Rishitha","Kumari",200000,'14-04-11 09.00.00',"Admin");
+savepoint a12;
+delete from worker where worker_id = 010;
+
+select * from worker;
+
+rollback to a12;
+select * from worker;
+
+-- Operators
+
+select * from worker where salary >= 200000;
+select * from worker where salary <= 200000;
+select * from worker where salary <= 300000 and salary >= 200000;
+select * from worker where salary >= 200000 and department = "Admin";
+
+select * from worker where salary >= 200000 and department = "hr";
+
+select * from worker where salary <= 200000 and (department = "hr" or department = "admin");
+select * from worker where salary <= 200000 and department in ("hr","admin");
+
+select * from worker where (salary <= 300000 and salary >= 100000) and (department = "account" or department = "admin");
+
+select * from worker where worker_id in (4,5,6);
+select * from worker where worker_id not in (4,5,6);
+
+select * from worker where worker_id%2 = 0 and department in ("admin","hr") and salary = (select max(Salary) from worker);
+
