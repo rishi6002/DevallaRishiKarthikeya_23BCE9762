@@ -1,0 +1,113 @@
+create database tuesday;
+use tuesday;
+drop database tuesday;
+create table category(
+cID int primary key,
+cName varchar(30),
+cDetails varchar(30)
+);
+
+insert into category values(101,'Electronics','XYZ'),(102,'Furnitures','XYZ');
+
+select * from category;
+
+create table products(
+pID int primary key,
+pName varchar(30),
+pDetials varchar(30),
+cID int,
+foreign key products(cID) references category(cID) on update cascade);
+desc products;
+
+insert into products values(401,'Oneplus 11R','8GB RAM 128GB SSD',101);
+
+select * from products;
+
+-- To delete Parent : All Childs Must be Deleted 
+
+delete from category where cID = 101; -- Raises an error because a child reference is present for 101 
+
+update category set cID = 109 where cID = 101; -- Cannot Update due to a presense of child reference
+update category set cID = 108 where cID = 102; -- Successfully Updated cID due to no presence of child 
+
+#foreign key products(cID) references category(cID) on delete cascade
+-- You can delete the parent even if there are child references
+
+#foreign key products(cID) references category(cID) on update cascade
+-- You can update the parent value even in presence of childrens
+
+-- FOREIGN KEY
+create table customers( -- Initial Creation
+customerID int not null,
+customerAge int,
+customerName varchar(30)
+);
+
+alter table customers modify customerName varchar(30) not null; -- Adding/Modifying Later
+desc customers;
+
+drop table customers;
+
+-- PRIMARY KEY
+create table customers( -- Initial Creation
+customerID int,
+customerAge int,
+customerName varchar(30),
+primary key (customerID)
+);
+desc customers;
+
+alter table customers add primary key (customerID); -- Adding Later
+desc customers;
+
+alter table customers drop primary key; -- Droping PK
+desc customers;
+
+-- FORIEGN KEY
+create table customers( -- Initial Creation
+customerID int,
+customerAge int,
+customerName varchar(30),
+primary key (customerID)
+);
+
+create table subscription(
+sID int,
+sExpiry varchar(30),
+primary key (sID),
+customerID int,
+constraint FK_constraint Foreign key (customerID) references customers(customerID)
+);
+desc subscription;
+
+alter table subscription drop foreign key FK_constraint; -- If you use direct FK Name it won't drop. 
+
+alter table subscription add constraint FK_constraint foreign key (customerID) references customers(customerID); -- Adding FK Later
+desc subscription;
+
+
+-- CHECK CONSTRAINT
+create table items(
+itemID int,
+itemName varchar(30),
+itemCost int,
+check (itemCost >=0)
+);
+
+-- DEFAULT CONSTRAINT
+drop table items;
+
+create table items(
+itemID int default 001,
+itemName varchar(30),
+itemCost int,
+check (itemCost >=0)
+);
+desc items;
+
+
+
+
+
+
+
