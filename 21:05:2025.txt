@@ -1,0 +1,100 @@
+CREATE TABLE Worker (
+	WORKER_ID INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+	FIRST_NAME CHAR(25),
+	LAST_NAME CHAR(25),
+	SALARY INT(15),
+	JOINING_DATE DATETIME,
+	DEPARTMENT CHAR(25)
+);
+
+INSERT INTO Worker 
+	(WORKER_ID, FIRST_NAME, LAST_NAME, SALARY, JOINING_DATE, DEPARTMENT) VALUES
+		(001, 'Monika', 'Arora', 100000, '14-02-20 09.00.00', 'HR'),
+		(002, 'Niharika', 'Verma', 80000, '14-06-11 09.00.00', 'Admin'),
+		(003, 'Vishal', 'Singhal', 300000, '14-02-20 09.00.00', 'HR'),
+		(004, 'Amitabh', 'Singh', 500000, '14-02-20 09.00.00', 'Admin'),
+		(005, 'Vivek', 'Bhati', 500000, '14-06-11 09.00.00', 'Admin'),
+		(006, 'Vipul', 'Diwan', 200000, '14-06-11 09.00.00', 'Account'),
+		(007, 'Satish', 'Kumar', 75000, '14-01-20 09.00.00', 'Account'),
+		(008, 'Geetika', 'Chauhan', 90000, '14-04-11 09.00.00', 'Admin');
+
+
+select * from worker where salary between 100000 and 500000;
+select * from worker where salary not between 100000 and 500000;
+
+select * from worker where salary between 100000 and 500000  and department in ("hr","account");
+select * from worker where salary between 100000 and 500000  and department not in ("hr","account");
+
+select max(salary) as max_salary from worker;
+select min(salary) as min_salary from worker;
+select avg(salary) as avg_salary from worker;
+select count(*) as noOfMembers from worker;
+select sum(salary) as sumSalary from worker;
+
+select distinct (department) from worker;
+CREATE TABLE Worker1 (
+	WORKER_ID INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+	FIRST_NAME CHAR(25),
+	LAST_NAME CHAR(25),
+	SALARY INT(15),
+	JOINING_DATE DATETIME,
+	DEPARTMENT CHAR(25)
+);
+
+
+INSERT INTO Worker 
+	(WORKER_ID, FIRST_NAME, LAST_NAME, SALARY, JOINING_DATE, DEPARTMENT) VALUES
+		(009, 'Monika1', 'Arora1', 100000, '14-02-20 09.00.00', 'HR'),
+		(010, 'Niharika1', 'Verma1', 80000, '14-06-11 09.00.00', 'Admin'),
+		(011, 'Vishal1', 'Singhal1', 300000, '14-02-20 09.00.00', 'HR'),
+		(012, 'Amitabh1', 'Singh1', 500000, '14-02-20 09.00.00', 'Admin'),
+		(013, 'Vivek1', 'Bhati1', 500000, '14-06-11 09.00.00', 'Admin'),
+		(014, 'Vipul1', 'Diwan1', 200000, '14-06-11 09.00.00', 'Account'),
+		(015, 'Satish1', 'Kumar1', 75000, '14-01-20 09.00.00', 'Account'),
+		(016, 'Geetika1', 'Chauhan1', 90000, '14-04-11 09.00.00', 'Admin');
+
+select department from worker
+union 
+select department from worker1;
+
+select department from worker
+union all -- Allows duplicates
+select department from worker1;
+
+select * from worker where department = 'admin' and salary <= 100000
+union 
+select * from worker1 where department = 'admin';
+
+
+select first_name,salary,
+case
+when salary <= 300000 then 'Lower'
+when salary > 300000 && salary <= 700000 then 'Middle'
+when salary > 700000 then 'Higher'
+else 'Incorrect Data'
+end
+as Status from worker; 
+
+select * from worker where salary <= 500000 order by salary desc;
+select * from worker order by first_name asc, last_name desc;
+
+select * from worker;
+
+select * from worker where first_name like 'A%';
+select * from worker where first_name like '_A%';
+select * from worker where first_name like '%_z';
+select * from worker where first_name like 'a%a';
+select * from worker where last_name like 'S%a';
+
+create view hrMembers as select * from worker where department = 'hr';
+create view adminMembers as select * from worker where department = 'admin';
+create view accountMembers as select * from worker where department = 'account';
+
+select * from adminMembers;
+
+#create or replace view {viewName} as select ...... -> to rename existing one or create new one if does not exist
+create or replace view HRMembers as select * from worker where department = 'hr';
+select * from HRMembers;
+
+
+
