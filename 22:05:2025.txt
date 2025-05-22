@@ -1,0 +1,50 @@
+use vitap;
+drop table worker;
+
+select count(department) from worker group by department order by count(department) desc limit 1;
+select department,sum(salary) from worker group by department order by sum(salary) limit 1;
+
+select department,count(department) from worker group by department having count(department) > 3;
+
+
+select * from worker;
+select department, sum(salary) from worker group by department order by sum(salary) desc limit 1;
+select department, sum(salary) from worker group by department order by sum(salary) desc limit 1 offset 1;
+select department, sum(salary) from worker group by department order by sum(salary) desc limit 1 offset 2;
+select department, sum(salary) from worker group by department order by sum(salary) limit 1;
+
+select * from worker where salary = (select max(salary) from worker);
+select * from worker where salary > (select salary from worker order by salary asc limit 1 offset 1);
+
+select * from worker1;
+
+create table student(
+s_id int,
+s_name varchar(25)
+);
+insert into student values (101,'jayanth'),(102,'karthik'),(103,'Praveen'),(105,'mahesh'),(106,'Arun');
+
+select * from student;
+
+create table address(
+s_id int,
+s_address varchar(25));
+insert into address values (101,'coimbatore'),(104,'chennai'),(105,'pune');
+
+select * from address;
+
+-- JOINS
+
+select * from student cross join address;
+select * from student inner join address where student.s_id = address.s_id;
+select * from student natural join address;
+select * from student left join address on student.s_id = address.s_id;
+select * from student right join address on student.s_id = address.s_id;
+
+
+
+
+
+
+
+
